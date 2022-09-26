@@ -19,14 +19,17 @@ async function getInfos(session, user)
         categories: parse(infos.listeCategories, ({ estDefaut }) => ({
             isDefault: estDefaut
         })),
-        infos: parse(infos.listeActualites, ({ dateDebut, elmauteur, listeQuestions }) => ({
-            date: parse(dateDebut),
-            author: parse(elmauteur),
-            content: parse(listeQuestions, ({ texte, listePiecesJointes }) => ({
-                text: parse(texte),
-                files: parse(listePiecesJointes)
-            }))
-        }))
+        infos: parse(
+            infos.listeModesAff && infos.listeModesAff.length ? infos.listeModesAff[0]?.listeActualites : {},
+            ({ dateDebut, elmauteur, listeQuestions }) => ({
+                date: parse(dateDebut),
+                author: parse(elmauteur),
+                content: parse(listeQuestions, ({ texte, listePiecesJointes }) => ({
+                    text: parse(texte),
+                    files: parse(listePiecesJointes)
+                }))
+            })
+        )
     };
 }
 
