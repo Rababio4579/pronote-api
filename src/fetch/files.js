@@ -18,6 +18,11 @@ async function files(session, user) {
     }
 
     for (const file of files.listeRessources.V) {
+        if (file.ressource.V.url) {
+            file.ressource.V.G = 0;
+        } else {
+            file.ressource.V.G = 1;
+        }
         result.push(withId({
             time: parseDate(file.date.V),
             subject: subjects[file.matiere.V.N],
