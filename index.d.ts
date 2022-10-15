@@ -1318,7 +1318,12 @@ export interface File extends Identifiable
     /**
      * URL directe du fichier
      */
-    url: string
+    url: string,
+
+    /**
+     * Type du fichier (0 = link, 1 = file)
+     */
+    type: 0 | 1,
 }
 
 /**

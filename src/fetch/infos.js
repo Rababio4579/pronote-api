@@ -21,7 +21,7 @@ async function infos(session, user)
             author: info.author.name,
             content: fromHTML(info.content[0].text),
             htmlContent: info.content[0].text,
-            files: info.content[0].files.map(f => withId({ name: f.name, url: getFileURL(session, f) }, ['name']))
+            files: info.content[0].files.map(f => withId({ name: f.name, url: getFileURL(session, f), type: f.type }, ['name']))
         }, ['date', 'title']));
     }
 

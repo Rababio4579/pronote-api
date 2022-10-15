@@ -22,7 +22,8 @@ async function files(session, user) {
             time: parseDate(file.date.V),
             subject: subjects[file.matiere.V.N],
             name: file.ressource.V.L,
-            url: getFileURL(session, { id: file.ressource.V.N, name: file.ressource.V.L, type: file.ressource.V.G })
+            url: getFileURL(session, { id: file.ressource.V.N, name: file.ressource.V.L, type: file.ressource.V.G }),
+            type: file.ressource.V.G
         }, 'subject', 'name'));
     }
 

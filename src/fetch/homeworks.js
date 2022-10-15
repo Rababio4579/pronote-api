@@ -26,7 +26,6 @@ async function homeworks(session, user, from = new Date(), to = null)
         if (homework.for < from || homework.for > to) {
             continue;
         }
-
         result.push(withId({
             description: fromHTML(homework.description),
             htmlDescription: homework.description,
@@ -35,7 +34,7 @@ async function homeworks(session, user, from = new Date(), to = null)
             for: homework.for,
             done: homework.done,
             color: homework.color,
-            files: homework.files.map(f => withId({ name: f.name, url: getFileURL(session, f) }, ['name']))
+            files: homework.files.map(f => withId({ name: f.name, url: getFileURL(session, f), type: f.type }, ['name']))
         }, 'subject', 'givenAt'));
     }
 

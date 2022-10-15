@@ -40,7 +40,7 @@ async function contents(session, user, from = new Date(), to = null)
             title: content.name,
             description: fromHTML(content.description),
             htmlDescription: content.htmlDescription,
-            files: content.files.map(f => withId({ name: f.name, url: getFileURL(session, f) }, ['name'])),
+            files: content.files.map(f => withId({ name: f.name, url: getFileURL(session, f), type: f.type }, ['name'])),
             category: content.category.name
         }, ['subject', 'from', 'to']));
     }
