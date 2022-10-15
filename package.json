@@ -1,6 +1,6 @@
 {
   "name": "pronote-api-maintained",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "description": "Pronote 2020/2021 API (Node.JS/TS library, and GraphQL server)",
   "main": "index.js",
   "types": "index.d.ts",
@@ -18,7 +18,7 @@
     "pronote",
     "api",
     "http",
-    "2020"
+    "2022"
   ],
   "author": "Adrien 'Litarvan' Navratil <adrien1975@live.fr>",
   "license": "MIT",
