@@ -1,6 +1,6 @@
 const jsdom = require('jsdom');
 
-const { getDOM } = require('./api');
+const { getDOM, extractStart } = require('./api');
 const educonnect = require('./generics/educonnect');
 
 async function login(url, account, username, password)
@@ -16,7 +16,9 @@ async function login(url, account, username, password)
         jar
     });
 
-    return educonnect({ dom, jar, url, account, username, password });
+    await educonnect({ dom, jar, url, account, username, password });
+
+    return extractStart(await getDOM({ url: url + account.value + '.html', jar, asIs: true }));
 }
 
 module.exports = login;
