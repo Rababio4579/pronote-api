@@ -38,7 +38,8 @@ async function homeworks(session, user, from = new Date(), to = null)
                 name: f.name,
                 url: getFileURL(session, f),
                 type: f.type
-            }, ['name']))
+            }, ['name'])),
+            markAs: homework.markAs
         }, 'subject', 'givenAt'));
     }
 

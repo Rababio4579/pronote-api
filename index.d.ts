@@ -1295,6 +1295,12 @@ export interface Homework extends Identifiable
      * Fichiers attachés au devoir
      */
     files: Array<File>
+
+    /**
+     * Coche (ou décoche) la case "J'ai terminé" du devoir
+     * @param done `true` pour fait et `false` pour non fait
+     */
+    markAs(done: boolean): Promise<void>
 }
 
 /**

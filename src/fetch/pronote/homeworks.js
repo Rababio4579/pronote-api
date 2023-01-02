@@ -1,10 +1,12 @@
 const parse = require('../../data/types');
+const request = require('../../request');
 
 const navigate = require('./navigate');
 
 const PAGE_NAME = 'PageCahierDeTexte';
 const TAB_ID = 88;
 const ACCOUNTS = ['student', 'parent'];
+const MARK_DONE_NAME = 'SaisieTAFFaitEleve';
 
 async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
 {
@@ -23,9 +25,9 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
         return null;
     }
 
-    return parse(homeworks.ListeTravauxAFaire, ({
+    const result = parse(homeworks.ListeTravauxAFaire, ({
         descriptif, PourLe, TAFFait, niveauDifficulte, duree, cours, DonneLe,
-        Matiere, CouleurFond, ListePieceJointe
+        Matiere, CouleurFond, ListePieceJointe, N
     }) => ({
         description: parse(descriptif),
         lesson: parse(cours),
@@ -38,6 +40,24 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
         color: CouleurFond,
         files: parse(ListePieceJointe)
     }));
+
+    result.forEach(homework => {
+        homework.markAs = async (done) => {
+            console.log(homework.id);
+            const res = await request(session, MARK_DONE_NAME, {
+                    donnees: {
+                        listeTAF: [{
+                            E: 2,
+                            N: homework.id,
+                            TAFFait: done
+                        }]
+                    },
+                    _Signature_: { onglet: TAB_ID }
+            })
+        }
+    });
+
+    return result;
 }
 
 module.exports = getHomeworks;
