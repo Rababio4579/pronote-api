@@ -37,23 +37,32 @@ async function student()
 
     const { from, to } = getFetchDate(session);
 
-    const timetable = await session.timetable(from, to);
+    const homeworks = await session.homeworks(from, to);
+
     const marks = await session.marks();
     const evaluations = await session.evaluations();
     const absences = await session.absences();
     const infos = await session.infos();
     const contents = await session.contents(from, to);
-    const homeworks = await session.homeworks(from, to);
+
     const menu = await session.menu(from, to);
     const files = await session.files();
+
+    const report = await session.reports();
+
+    const recipients = await session.recipients();
+    const discussions = await session.discussions();
+    const seeDiscussion = discussions.length ? await session.seeDiscussion(discussions[0]) : null;
+
 
     return {
         name: session.user.name,
         studentClass: session.user.studentClass.name,
         avatar: session.user.avatar,
 
-        timetable, marks, evaluations, absences,
-        infos, contents, homeworks, menu, files
+        marks, evaluations, absences,
+        infos, contents, homeworks, menu, files,
+        report, recipients, discussions, seeDiscussion
     };
 }
 

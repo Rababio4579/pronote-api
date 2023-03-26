@@ -5,7 +5,7 @@ import * as forge from 'node-forge';
 /**
  * Une session Pronote
  *
- * Peut être ouverte via les fonctions {@link login}, ou {@link loginParent}.
+ * Peut être ouverte via les fonctions {@link login} ou {@link loginParent}.
  * Ouverte par l'une de ces fonctions, le champ {@link params} est garanti d'être rempli.
  *
  * La session dure quelques dizaines de minutes, sauf si {@link setKeepAlive}(true) est appelé,
@@ -25,7 +25,7 @@ export abstract class PronoteSession
     constructor(options: PronoteSessionOptions)
 
     /**
-     * ID unique de la session donné par Pronote, sous la forme d'une suite de 7 chiffres.
+     * ID unique de la session donnée par Pronote, sous la forme d'une suite de 7 chiffres.
      */
     id: number
 
@@ -63,7 +63,7 @@ export abstract class PronoteSession
 
     /**
      * Vecteur d'initialisation (VI, donc IV en anglais) de chiffrement, généré aléatoirement par la fonction
-     * {@link login} lors de la création d'une session, et utilisé dans toutes les opérations de chiffrement.
+     * {@link login} lors de la création d'une session et utilisé dans toutes les opérations de chiffrement.
      */
     aesIV: forge.util.ByteBuffer
 
@@ -104,9 +104,9 @@ export abstract class PronoteSession
     logout(): Promise<void>
 
     /**
-     * Active le maintien en vie de la session. Dès que ce paramètre est défini à `true`, l'API enverra
+     * Active le maintien en vie de la session. Dès que ce paramètre est défini à 'true', l'API enverra
      * des requêtes de présence à Pronote à l'intervalle défini. Tant que ce paramètre n'est pas défini à `false`
-     * le programme fermé, ou une erreur renvoyée, les requêtes continueront d'être envoyées et la session
+     * le programme fermé ou une erreur renvoyée, les requêtes continueront d'être envoyées et la session
      * sera maintenue indéfiniment.
      *
      * @param enabled Si oui ou non le maintien de la session doit être activé
@@ -132,13 +132,13 @@ export class PronoteStudentSession extends PronoteSession
 
 
     /**
-     * Récupère les cours situés dans l'intervalle de temps donnée.
+     * Récupère les cours situés dans l'intervalle de temps donné.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * mettre par exemple en 'to' le Mercredi 2 Septembre, ne renverra donc aucun des cours de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 deptembre, ne renverra donc aucun des cours de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 deptembre, il faut alors faire `new Date(2020, 8, 2);`.
      *
      * @param from La date à partir de laquelle récupérer les cours. Par défaut la Date actuelle
      * @param to La date jusqu'à laquelle récupérer les cours. Par défaut 'from' + 1 jour
@@ -153,7 +153,7 @@ export class PronoteStudentSession extends PronoteSession
      * la période donnée.
      *
      * @param period La période depuis laquelle récupérer les notes et les moyennes. Par défaut le trimestre
-     * dans lequel on est, ou le premier si on est hors période.
+     * dans lequel on est ou le premier si on est hors période.
      *
      * @return Toutes les notes de cette période par matière, avec les moyennes de ces dernières, et si disponibles,
      * les moyennes générales de l'utilisateur et de sa classe. Si l'onglet des notes n'est pas disponible,
@@ -165,7 +165,7 @@ export class PronoteStudentSession extends PronoteSession
      * Récupère la liste des évaluations ayant eu lieu dans la période donnée.
      *
      * @param period La période depuis laquelle récupérer les notes et les moyennes. Par défaut le trimestre
-     * dans lequel on est, ou le premier si on est hors période.
+     * dans lequel on est ou le premier si on est hors période.
      *
      * @return Toutes les évaluations de cette période rangée par matière. Si l'onglet des évaluations n'est pas
      * disponible, `null` sera renvoyé.
@@ -173,13 +173,13 @@ export class PronoteStudentSession extends PronoteSession
     evaluations(period?: PronotePeriod | String): Promise<Array<EvaluationsSubject> | null>
 
     /**
-     * Récupère la liste des évènements tels que les absences, punitions, retenues, ou autre.
+     * Récupère la liste des évènements tels que les absences, punitions, retenues ou autres.
      *
      * Il est possible de mettre 'from' et 'to' de sorte à couvrir toute l'année, tant que 'period' est défini à
      * `null` ou au premier trimestre. Cela renverra alors bien les évènements de toute l'année.
      *
      * @param period La période depuis laquelle récupérer les évènements. Par défaut le trimestre dans lequel on
-     * est, ou le premier si on est hors période.
+     * est ou le premier si on est hors période.
      * @param from À partir de quand récupérer les évènements
      * @param to Jusqu'à quand récupérer les évènements
      *
@@ -196,30 +196,30 @@ export class PronoteStudentSession extends PronoteSession
     infos(): Promise<Array<Info> | null>
 
     /**
-     * Récupère les contenus des cours situés dans l'intervalle de temps donnée.
+     * Récupère les contenus des cours situés dans l'intervalle de temps donné.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * mettre par exemple en 'to' le Mercredi 2 Septembre, ne renverra le contenu d'aucun des cours de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 septembre, ne renverra le contenu d'aucun des cours de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut donc faire `new Date(2020, 8, 2);`.
      *
      * @param from La date à partir de laquelle récupérer le contenu des cours. Par défaut la Date actuelle
      * @param to La date jusqu'à laquelle récupérer le contenu des cours. Par défaut 'from' + 1 jour
      *
-     * @return La liste des leçons situés entre les deux dates données. Si l'onglet du contenu des cours n'est
+     * @return La liste des leçons situées entre les deux dates données. Si l'onglet du contenu des cours n'est
      * pas disponible, `null` sera renvoyé.
      */
     contents(from?: Date, to?: Date): Promise<Array<LessonContent> | null>
 
     /**
-     * Récupère les devoirs situés dans l'intervalle de temps donnée.
+     * Récupère les devoirs situés dans l'intervalle de temps donné.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * mettre par exemple en 'to' le Mercredi 2 Septembre, ne renverra donc aucun des devoirs de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 septembre, ne renverra donc aucun des devoirs de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut alors faire `new Date(2020, 8, 2);`.
      *
      * @param from La date à partir de laquelle récupérer les devoirs. Par défaut la Date actuelle
      * @param to La date jusqu'à laquelle récupérer les devoirs. Par défaut 'from' + 1 jour
@@ -233,11 +233,11 @@ export class PronoteStudentSession extends PronoteSession
      * Récupère les menus de la cantine des repas situés dans l'intervalle de temps donnée.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * donc en sachant que les dates renvoyées par Pronote des menus seront aussi fixées à minuit, cela signifie que
-     * mettre par exemple en 'to' le Mercredi 2 Septembre renverra aussi le menu de ce jour.
+     * donc en sachant que les dates renvoyées par Pronote des menus seront aussi fixés à minuit, cela signifie que
+     * mettre par exemple en 'to' le mercredi 2 septembre renverra aussi le menu de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut ainsi faire `new Date(2020, 8, 2);`.
      *
      * @param from La date à partir de laquelle récupérer les menus. Par défaut la Date actuelle
      * @param to La date jusqu'à laquelle récupérer les menus. Par défaut 'from' + 23 heures
@@ -248,13 +248,53 @@ export class PronoteStudentSession extends PronoteSession
     menu(from?: Date, to?: Date): Promise<Array<MenuDay> | null>
 
     /**
-     * Récupère les fichier publiés sur votre pronote depuis le début de l'années
+     * Récupère les fichiers publiés sur votre pronote depuis le début de l'année
      * du plus récent au ancien.
      *
-     * @return La liste des fichier publiés depuis le début de l'année. Si l'onglet des fichiers n'est pas
+     * @return La liste des fichiers publiés depuis le début de l'année. Si l'onglet des fichiers n'est pas
      * disponible, `null` sera renvoyé.
      */
     files(): Promise<Array<File> | null>
+
+    /**
+     * Récupère le bulletin de l'élève dans la période donnée.
+     * Si la période n'est pas donnée, le bulletin du trimestre en cours sera renvoyé.
+     *
+     * @param period La période du bulletin à récupérer. Par défaut la période en cours
+     *
+     * @return Le bulletin de l'élève. Si l'onglet du bulletin n'est pas disponible, une erreur sera renvoyée.
+     */
+    reports(period?: PronotePeriod | String): Promise<PronoteReport | PronoteReportError>
+
+    /**
+     * Récupère les discussions de l'élève.
+     *
+     * @return La liste des discussions de l'élève. Si l'onglet des discussions n'est pas disponible, `null` sera renvoyé.
+     */
+    discussions(): Promise<Array<Discussion> | null>
+
+    /**
+     * Récupère les messages d'une discussion.
+     *
+     * @param discussion La discussion dont on veut récupérer les messages
+     *
+     * @return La liste des messages de la discussion. Si l'onglet des discussions n'est pas disponible, `null` sera renvoyé.
+     */
+    seeDiscussion(discussion: Discussion | string): Promise<Discussion>
+
+    /**
+     * Créé une discussion avec les destinataires donnés.
+     * @param subject Le sujet de la discussion
+     * @param message Le premier message de la discussion
+     * @param recipients Les destinataires de la discussion
+     */
+    newDiscussion(subject: string, message: string, recipients: Array<PronoteRecipient>): Promise<Discussion>
+
+    /**
+     * Renvoie la liste des destinataires possibles pour une discussion.
+     * @return La liste des destinataires possibles pour une discussion.
+     */
+    recipients(): Promise<Array<PronoteRecipient>>
 }
 
 /**
@@ -273,13 +313,13 @@ export class PronoteParentSession extends PronoteSession
 
 
     /**
-     * Récupère les cours d'un élève situé dans l'intervalle de temps donnée.
+     * Récupère les cours d'un élève situé dans l'intervalle de temps donné.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * mettre par exemple en 'to' le Mercredi 2 Septembre, ne renverra donc aucun des cours de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 septembre, ne renverra donc aucun des cours de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut alors faire `new Date(2020, 8, 2);`.
      *
      * @param student L'élève dont il faut récupérer les cours
      * @param from La date à partir de laquelle récupérer les cours. Par défaut la Date actuelle
@@ -294,9 +334,9 @@ export class PronoteParentSession extends PronoteSession
      * Récupère les notes d'un élève et, si disponibles, les moyennes générales de l'élève et de sa classe, dans
      * la période donnée.
      *
-     * @param student L'élève dont il faut récupérer les ,ptes
+     * @param student L'élève dont il faut récupérer les, notes
      * @param period La période depuis laquelle récupérer les notes et les moyennes. Par défaut le trimestre
-     * dans lequel on est, ou le premier si on est hors période.
+     * dans lequel on est ou le premier si on est hors période.
      *
      * @return Toutes les notes de cette période par matière, avec les moyennes de ces dernières, et si disponibles,
      * les moyennes générales de l'utilisateur et de sa classe. Si l'onglet des notes n'est pas disponible,
@@ -309,7 +349,7 @@ export class PronoteParentSession extends PronoteSession
      *
      * @param student L'élève dont il faut récupérer les évaluations
      * @param period La période depuis laquelle récupérer les notes et les moyennes. Par défaut le trimestre
-     * dans lequel on est, ou le premier si on est hors période.
+     * dans lequel on est ou le premier si on est hors période.
      *
      * @return Toutes les évaluations de cette période rangée par matière. Si l'onglet des évaluations n'est pas
      * disponible, `null` sera renvoyé.
@@ -317,14 +357,14 @@ export class PronoteParentSession extends PronoteSession
     evaluations(student: PronoteStudent, period?: PronotePeriod | String): Promise<Array<EvaluationsSubject> | null>
 
     /**
-     * Récupère la liste des évènements d'un élève tels que les absences, punitions, retenues, ou autre.
+     * Récupère la liste des évènements d'un élève tels que les absences, punitions, retenues ou autres.
      *
      * Il est possible de mettre 'from' et 'to' de sorte à couvrir toute l'année, tant que 'period' est défini à
      * `null` ou au premier trimestre. Cela renverra alors bien les évènements de toute l'année.
      *
      * @param student L'élève dont il faut récupérer les évènements
      * @param period La période depuis laquelle récupérer les évènements. Par défaut le trimestre dans lequel on
-     * est, ou le premier si on est hors période.
+     * est ou le premier si on est hors période.
      * @param from À partir de quand récupérer les évènements
      * @param to Jusqu'à quand récupérer les évènements
      *
@@ -346,10 +386,10 @@ export class PronoteParentSession extends PronoteSession
      * Récupère les contenus des cours d'un élève situés dans l'intervalle de temps donnée.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * mettre par exemple en 'to' le Mercredi 2 Septembre, ne renverra le contenu d'aucun des cours de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 septembre, ne renverra le contenu d'aucun des cours de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut donc faire `new Date(2020, 8, 2);`.
      *
      * @param student L'élève dont il faut récupérer le contenu des cours
      * @param from La date à partir de laquelle récupérer le contenu des cours. Par défaut la Date actuelle
@@ -364,10 +404,10 @@ export class PronoteParentSession extends PronoteSession
      * Récupère les devoirs d'un élève situés dans l'intervalle de temps donnée.
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
-     * mettre par exemple en 'to' le Mercredi 2 Septembre, ne renverra donc aucun des devoirs de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 septembre, ne renverra donc aucun des devoirs de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut donc faire `new Date(2020, 8, 2);`.
      *
      * @param student L'élève dont il faut récupérer les devoirs
      * @param from La date à partir de laquelle récupérer les devoirs. Par défaut la Date actuelle
@@ -383,10 +423,10 @@ export class PronoteParentSession extends PronoteSession
      *
      * Attention : Par défaut, une Date en JavaScript est initialisée à minuit si l'heure n'est pas donnée,
      * donc en sachant que les dates renvoyées par Pronote des menus seront aussi fixées à minuit, cela signifie que
-     * mettre par exemple en 'to' le Mercredi 2 Septembre renverra aussi le menu de ce jour.
+     * mettre par exemple en 'to' le mercredi 2 septembre renverra aussi le menu de ce jour.
      *
      * Rappelez-vous aussi que le champ du mois dans les dates est décalé de 1 en arrière, et seulement
-     * ce champ. Pour initialiser une Date au Mercredi 2 Septembre, il faut donc faire `new Date(2020, 8, 2);`.
+     * ce champ. Pour initialiser une Date au mercredi 2 septembre, il faut alors faire `new Date(2020, 8, 2);`.
      *
      * @param student L'élève dont il faut récupérer les menus
      * @param from La date à partir de laquelle récupérer les menus. Par défaut la Date actuelle
@@ -398,15 +438,57 @@ export class PronoteParentSession extends PronoteSession
     menu(student: PronoteStudent, from?: Date, to?: Date): Promise<Array<MenuDay> | null>
 
     /**
-     * Récupère les fichier publiés sur votre pronote depuis le début de l'années
-     * du plus récent au ancien.
+     * Récupère les fichiers publiés sur votre pronote depuis le début de l'année
+     * du plus récent au plus ancien.
      *
      * @param student L'élève dont il faut récupérer les menus
      *
-     * @return La liste des fichier publiés depuis le début de l'année. Si l'onglet des fichiers n'est pas
+     * @return La liste des fichiers publiés depuis le début de l'année. Si l'onglet des fichiers n'est pas
      * disponible, `null` sera renvoyé.
      */
     files(student: PronoteStudent): Promise<Array<File> | null>
+
+    /**
+     * Récupère le bulletin de l'élève dans la période donnée.
+     * Si la période n'est pas donnée, le bulletin du trimestre en cours sera renvoyé.
+     *
+     * @param student L'élève dont il faut récupérer le bulletin
+     * @param period La période pour laquelle récupérer le bulletin. Par défaut la période en cours
+     *
+     * @return Le bulletin de l'élève dans la période donnée. Si l'onglet des bulletins n'est pas
+     * disponible, `null` sera renvoyé.
+     */
+    reports(student: PronoteStudent, period?: PronotePeriod | String): Promise<PronoteReport | PronoteReportError>
+
+    /**
+     * Récupère les discussions du parent.
+     *
+     * @return La liste des discussions du parent. Si l'onglet des discussions n'est pas disponible, `null` sera renvoyé.
+     */
+    discussions(): Promise<Array<Discussion> | null>
+
+    /**
+     * Récupère les messages d'une discussion.
+     *
+     * @param discussion La discussion dont on veut récupérer les messages
+     *
+     * @return La liste des messages de la discussion. Si l'onglet des discussions n'est pas disponible, `null` sera renvoyé.
+     */
+    seeDiscussion(discussion: Discussion | string): Promise<Discussion>
+
+    /**
+     * Créé une discussion avec les destinataires donnés.
+     * @param subject Le sujet de la discussion
+     * @param message Le premier message de la discussion
+     * @param recipients Les destinataires de la discussion
+     */
+    newDiscussion(subject: string, message: string, recipients: Array<PronoteRecipient>): Promise<Discussion>
+
+    /**
+     * Renvoie la liste des destinataires possibles pour une discussion.
+     * @return La liste des destinataires possibles pour une discussion.
+     */
+    recipients(): Promise<Array<PronoteRecipient>>
 }
 
 /**
@@ -474,7 +556,7 @@ export const casList: Array<string>;
  *
  * @param url L'URL de l'instance Pronote dont laquelle trouver le CAS par lequel il faut passer pour s'y connecter.
  *
- * @return Le nom du CAS à mettre, ou une liste des noms des CAS possibles, ou `null` si introuvable.
+ * @return Le nom du CAS à mettre ou une liste des noms des CAS possibles ou `null` si introuvable.
  */
 export function getCAS(url: string): Promise<string | string[] | null>;
 
@@ -600,7 +682,7 @@ export interface PronoteError
     code: number,
 
     /**
-     * Message descriptif (en anglais) de l'erreur, ou message donné par Pronote (en français) si c'est une erreur
+     * Message descriptif (en anglais) de l'erreur ou message donné par Pronote (en français) si c'est une erreur
      * générique (erreur 'PRONOTE' : code -1).
      */
     message: string
@@ -615,11 +697,11 @@ export interface Identifiable
      * Identifiant unique de l'objet généré à partir du hash des informations considérées comme "propre" à l'objet
      * (voir la documentation de chaque objet Identifiable pour savoir lesquelles).
      *
-     * Il est sensé pouvoir identifier chaque objet entre les requêtes : il restera toujours le même après chaque essai.
+     * Il est censé pouvoir identifier chaque objet entre les requêtes : il restera toujours le même après chaque essai.
      * Cette fonctionnalité ayant été ajoutée récemment, cette affirmation est tout de même à prendre avec précaution.
      *
      * Dans le cas où deux objets distincts auraient le même identifiant, ce dernier est modifié en fonction de l'ordre
-     * dans lequel Pronote a renvoyé les objets, pour assurer l'absence d'identifiant en doublon, et sa conservation entre
+     * dans lequel Pronote a renvoyé les objets, pour assurer l'absence d'identifiant en doublon et sa conservation entre
      * les requêtes (on considère que l'ordre renvoyé par Pronote est constant).
      */
     id: string
@@ -803,7 +885,7 @@ export interface Mark extends Identifiable
     title: string,
 
     /**
-     * La note elle même, ou `null` si l'élève était absent.
+     * La note elle même ou `null` si l'élève était absent.
      */
     value?: number,
 
@@ -1144,12 +1226,12 @@ export interface SubjectAbsences
     subject: string,
 
     /**
-     * Nombre d'heure auquel l'élève a assisté
+     * Nombre d'heures auxquelles l'élève a assisté
      */
     hoursAssisted: number,
 
     /**
-     * Nombre d'heure que l'élève a manqué
+     * Nombre d'heures que l'élève a manqué
      */
     hoursMissed: number,
 
@@ -1292,13 +1374,19 @@ export interface Homework extends Identifiable
     color: string,
 
     /**
-     * Fichiers attachés au devoir
+     * Fichiers joints au devoir
      */
     files: Array<File>
+
+    /**
+     * Coche (ou décoche) la case "J'ai terminé" du devoir
+     * @param done `true` pour fait et `false` pour non fait
+     */
+    markAs(done: boolean): Promise<void>
 }
 
 /**
- * Un fichier attaché par exemple à une information, un devoir, ou au contenu d'un cours
+ * Un fichier attaché par exemple à une information, un devoir ou au contenu d'un cours
  */
 export interface File extends Identifiable
 {
@@ -2089,3 +2177,83 @@ export interface PronoteMenuLabel extends PronoteObject
     color: string // couleur
 }
 
+export interface PronoteReportError extends PronoteObject
+{
+    message: string, // message d'erreur
+}
+
+export interface PronoteReport extends PronoteObject
+{
+    studentClass: string, // classe
+    studentName: string, // nomEleve
+    studentAverage: number, // moyenneEleve
+    studentClassAverage: number, // moyenneClasse
+    globalComments: Array<PronoteReportGlobalComment>, // listeCommentairesGeneraux
+    teachersComments: Array<PronoteReportTeacherComment>, // listeCommentairesProfesseurs
+    absences: {
+        strAbsences: string, // strAbsences
+        strRetards: string, // strRetards
+        strPunitions: string, // strPunitions
+        strSanctions: string, // strSanctions
+    }
+}
+
+export interface PronoteReportGlobalComment extends PronoteObject
+{
+    text: string, // texte
+    id: string, // id
+    title: string, // titre
+}
+
+export interface PronoteReportTeacherComment extends PronoteObject
+{
+    name: string, // nom de la matière
+    id: string, // id de l'appréciation
+    teachers: Array<string>, // liste des professeurs
+    color: string, // couleur de la matière
+    studentAverage: number, // moyenne de l'élève
+    studentClassAverage: number, // moyenne de la classe
+    minAverage: number, // moyenne minimale
+    maxAverage: number, // moyenne maximale
+    comments: Array<string> // liste des commentaires
+}
+
+export interface Discussion extends PronoteObject
+{
+    subject: string, // objet de la conversation
+    messagesCount: number, // nombre de messages
+    recipients: Array<string>, // destinataires
+    author: string, // auteur de la conversation
+    isRead: boolean, // lu
+    strDate: string, // date de la création de la conversation
+}
+
+export interface DiscussionMessage extends PronoteObject
+{
+    subject: string, // objet de la conversation
+    recipients: Array<string>, // destinataires
+    groupAuthor: string, // auteur de la conversation
+    messages: Array<PronoteMessage>, // messages
+}
+
+export interface PronoteMessage extends PronoteObject
+{
+    content: string, // contenu du message
+    htmlContent: string | null, // contenu du message en HTML
+    date: Date, // date du message
+    author: string, // auteur du message
+    authorHint: string, // indication sur l'auteur du message
+}
+
+export interface PronoteRecipient extends PronoteObject
+{
+    role: "teacher" | "staff" , // role of the contact
+    subjects: [
+        {
+            name: string, // name of the subject
+            subSubjects: Array<string> // list of sub subjects
+        }
+    ] | null, // list of subjects
+    isMainTeacher: boolean, // is the main teacher
+    function: string | null, // function of the contact
+}
