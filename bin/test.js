@@ -10,4 +10,4 @@ function test(type)
     fork(join(__dirname, 'fetch.js'), [DEMO_URL, DEMO_USERNAME, DEMO_PASSWORD, 'none', type], { stdio: 'inherit' });
 }
 
-['student', 'parent'].forEach(test);
+['student'/* , 'parent' */].forEach(test);

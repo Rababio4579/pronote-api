@@ -10,6 +10,8 @@ const contents = require('./fetch/contents');
 const homeworks = require('./fetch/homeworks');
 const menu = require('./fetch/menu');
 const files = require('./fetch/files');
+const reports = require('./fetch/report');
+const { discussions, newDiscussion, recipients, seeDiscussion } = require('./fetch/discussions')
 
 const keepAlive = require('./fetch/pronote/keepAlive');
 const logout = require('./fetch/pronote/logout');
@@ -20,7 +22,8 @@ const GENERAL_REQUESTS = {
 };
 const REQUESTS = {
     timetable, marks, evaluations, absences, contents,
-    infos, homeworks, menu, files
+    infos, homeworks, menu, files, reports, newDiscussion, seeDiscussion,
+    discussions, recipients
 };
 
 class PronoteSession

@@ -3,7 +3,7 @@ const { getFileURL } = require('../data/files');
 const fromHTML = require('../data/html');
 const { withId, checkDuplicates } = require('../data/id');
 
-const getHomeworks = require('./pronote/homeworks');
+const { getHomeworks } = require('./pronote/homeworks');
 
 async function homeworks(session, user, from = new Date(), to = null)
 {
@@ -27,6 +27,7 @@ async function homeworks(session, user, from = new Date(), to = null)
             continue;
         }
         result.push(withId({
+            pronoteId: homework.id,
             description: fromHTML(homework.description),
             htmlDescription: homework.description,
             subject: homework.subject.name,

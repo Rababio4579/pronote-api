@@ -27,7 +27,7 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
 
     const result = parse(homeworks.ListeTravauxAFaire, ({
         descriptif, PourLe, TAFFait, niveauDifficulte, duree, cours, DonneLe,
-        Matiere, CouleurFond, ListePieceJointe, N
+        Matiere, CouleurFond, ListePieceJointe
     }) => ({
         description: parse(descriptif),
         lesson: parse(cours),
@@ -38,26 +38,37 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
         difficultyLevel: niveauDifficulte,
         duration: duree,
         color: CouleurFond,
-        files: parse(ListePieceJointe)
-    }));
-
-    result.forEach(homework => {
-        homework.markAs = async (done) => {
-            console.log(homework.id);
-            const res = await request(session, MARK_DONE_NAME, {
-                    donnees: {
-                        listeTAF: [{
-                            E: 2,
-                            N: homework.id,
-                            TAFFait: done
-                        }]
-                    },
-                    _Signature_: { onglet: TAB_ID }
-            })
+        files: parse(ListePieceJointe),
+        markAs: async done => {
+            await markHomeworkAs(session, user, this, done)
         }
-    });
+    }));
 
     return result;
 }
 
-module.exports = getHomeworks;
+async function markHomeworkAs(session, user, homeworkId, done = true)
+{
+    if (!homeworkId) {
+        return null;
+    } else if (typeof homeworkId === 'object') {
+        homeworkId = homeworkId.pronoteId;
+    }
+    return await request(session, MARK_DONE_NAME, {
+        donnees: {
+            listeTAF: [
+                {
+                    E: 2,
+                    N: homeworkId,
+                    TAFFait: done
+                }
+            ]
+        },
+        _Signature_: { onglet: TAB_ID }
+    });
+}
+
+module.exports = {
+    getHomeworks,
+    markHomeworkAs
+};

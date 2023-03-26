@@ -126,6 +126,7 @@ async function getParams(session)
         sequences: general.sequences,
         periods: general.ListePeriodes.map(p => fromPronote(p, ({ G, periodeNotation, dateDebut, dateFin }) => ({
             kind: G === 1 ? 'trimester' : (G === 2 ? 'semester' : (G === 3 ? 'year' : 'other')),
+            type: 2,
             notationPeriod: periodeNotation,
             from: parse(dateDebut),
             to: parse(dateFin)

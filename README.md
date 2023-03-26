@@ -17,15 +17,18 @@ Disponible en tant que :
 
 - Infos Pronote, établissement et utilisateur
 - Emploi du temps
-- Devoirs
+- Devoirs (possibilité de valider le travail)
 - Notes
+- Bulletins
 - Compétences/évaluations
 - Absences/punitions/retenues
-- Informations
+- Informations/sondages (et possibilité de répondre)
 - Menu de la cantine
 - Fichiers
+- Discussions (et création de discussions)
+- Utilisateurs recevant des messages
 
-À chaque fois, il est possible de choisir quelle période voire quelle intervalle de jours récupérer précisément.
+À chaque fois, il est possible de choisir quelle période, voire quel intervalle de jours récupérer précisément.
 
 ## Comptes région supportés
 
@@ -163,7 +166,7 @@ Le serveur renverra alors une réponse de cette forme :
 Retenez le Token, et vous pourrez appeler `POST /auth/logout` et `POST /graphql` **avec en Header `Token: LETOKEN`**,
 pour cette dernière le contenu doit être un JSON avec un field `query` contenant votre requête GraphQL.
 
-Exemple, pour récupérer les salles des cours du Mercredi 2 Septembre :
+Exemple, pour récupérer les salles des cours du mercredi 2 septembre :
 ```graphql
 {
     timetable(from: "2020-09-02") {
@@ -171,11 +174,11 @@ Exemple, pour récupérer les salles des cours du Mercredi 2 Septembre :
     }
 }
 ```
-Le schéma parent des requêtes et mutations se trouve [à cet endroit](https://github.com/Litarvan/pronote-api/blob/master/src/server/schemas/parent.graphql)
+Le schéma parent des requêtes et mutations se trouve [à cet endroit](https://github.com/Merlode11/pronote-api/blob/master/src/server/schemas/parent.graphql)
 
-Le schéma élèves des requêtes et mutations se trouve [à cet endroit](https://github.com/Litarvan/pronote-api/blob/master/src/server/schemas/student.graphql)
+Le schéma élèves des requêtes et mutations se trouve [à cet endroit](https://github.com/Merlode11/pronote-api/blob/master/src/server/schemas/student.graphql)
 
-Le schéma commun des requêtes et mutations se trouve [à cet endroit](https://github.com/Litarvan/pronote-api/blob/master/src/server/schemas/common.graphql) 
+Le schéma commun des requêtes et mutations se trouve [à cet endroit](https://github.com/Merlode11/pronote-api/blob/master/src/server/schemas/common.graphql) 
 
 ### Au secours je n'arrive pas à m'y connecter
 

@@ -16,11 +16,13 @@ const { getFilledDaysAndWeeks, getTimetable } = require('./src/fetch/pronote/tim
 const getMarks = require('./src/fetch/pronote/marks');
 const getEvaluations = require('./src/fetch/pronote/evaluations');
 const getAbsences = require('./src/fetch/pronote/absences');
-const getInfos = require('./src/fetch/pronote/infos');
+const { getInfos, markInfoAsSee } = require('./src/fetch/pronote/infos');
 const getContents = require('./src/fetch/pronote/contents');
-const getHomeworks = require('./src/fetch/pronote/homeworks');
+const { getHomeworks, markHomeworkAs } = require('./src/fetch/pronote/homeworks');
 const getMenu = require('./src/fetch/pronote/menu');
-const getFiles = require('./src/fetch/pronote/files')
+const getFiles = require('./src/fetch/pronote/files');
+const getReport = require('./src/fetch/pronote/report');
+const { getRecipients, createDiscussion, getDiscussion, getDiscussions } = require('./src/fetch/pronote/discussions');
 
 const navigate = require('./src/fetch/pronote/navigate');
 const keepAlive = require('./src/fetch/pronote/keepAlive');
@@ -57,8 +59,15 @@ module.exports = {
     fetchInfos: getInfos,
     fetchContents: getContents,
     fetchHomeworks: getHomeworks,
+    markHomeworkAs,
+    markInfoAsSee,
     fetchMenu: getMenu,
     fetchFiles: getFiles,
+    fetchReport: getReport,
+    fetchRecipients: getRecipients,
+    createDiscussion,
+    fetchDiscussion: getDiscussion,
+    fetchDiscussions: getDiscussions,
 
     navigate,
     keepAlive,

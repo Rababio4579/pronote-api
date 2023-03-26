@@ -3,7 +3,7 @@ function getPeriodBy(session, period, type = null)
     const Type = ['trimester', 'semester', 'year'];
     const periods = session.params.periods;
     if (!type || Type.indexOf(type) === -1) {
-        type = 'trimester'
+        type = 'trimester';
     }
     if (!period) {
         const now = Date.now();
