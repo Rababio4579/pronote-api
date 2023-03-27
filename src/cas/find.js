@@ -39,7 +39,8 @@ const URLS = {
     'seine-et-marne': 'ent77.seine-et-marne.fr',
     'somme': 'college.entsomme.fr',
     'toutatice': 'www.toutatice.fr',
-    'monbureaunumerique-educonnect': 'cas.monbureaunumerique.fr'
+    'monbureaunumerique-educonnect': 'cas.monbureaunumerique.fr',
+    'educdenormandie': 'ent.l-educdenormandie.fr'
 };
 
 async function find(url)
