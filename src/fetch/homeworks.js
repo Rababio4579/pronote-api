@@ -41,7 +41,7 @@ async function homeworks(session, user, from = new Date(), to = null)
                 type: f.type
             }, ['name'])),
             markAs: homework.markAs
-        }, 'subject', 'givenAt'));
+        }, ['subject', 'givenAt']));
     }
 
     return checkDuplicates(result).sort((a, b) => a.for - b.for);
