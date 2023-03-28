@@ -39,10 +39,12 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
         duration: duree,
         color: CouleurFond,
         files: parse(ListePieceJointe),
-        markAs: async done => {
-            await markHomeworkAs(session, user, this, done)
-        }
     }));
+    for (let i = 0; i < result.length; i++) { //  Add markAs function to each homework
+        result[i].markAs = async done => {
+            await markHomeworkAs(session, user, result[i].id, done)
+        };
+    }d
 
     return result;
 }
