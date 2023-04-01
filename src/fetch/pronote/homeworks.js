@@ -44,7 +44,7 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
         result[i].markAs = async done => {
             await markHomeworkAs(session, user, result[i].id, done)
         };
-    }d
+    }
 
     return result;
 }
