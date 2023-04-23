@@ -38,7 +38,7 @@ async function getHomeworks(session, user, fromWeek = 1, toWeek = null)
         difficultyLevel: niveauDifficulte,
         duration: duree,
         color: CouleurFond,
-        files: parse(ListePieceJointe),
+        files: parse(ListePieceJointe)
     }));
     for (let i = 0; i < result.length; i++) { //  Add markAs function to each homework
         result[i].markAs = async done => {
