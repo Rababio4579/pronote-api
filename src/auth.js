@@ -24,10 +24,7 @@ async function login(url, username, password, cas, account)
         type: account,
 
         disableAES: !!start.sCrA,
-        disableCompress: !!start.sCoA,
-
-        keyModulus: start.MR,
-        keyExponent: start.ER
+        disableCompress: !!start.sCoA
     })
 
     session.params = await getParams(session);

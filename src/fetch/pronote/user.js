@@ -25,7 +25,7 @@ async function getUser(session)
             country: Coordonnees.Pays,
             website: Coordonnees.SiteInternet
         })),
-        userSettings: (({ version, EDT, theme, Communication }) => ({
+        userSettings: (({ version, EDT, Communication }) => ({
             version,
             timetable: {
                 displayCanceledLessons: EDT.afficherCoursAnnules,
@@ -38,7 +38,6 @@ async function getUser(session)
                 daysInTimetable: EDT.nbJoursEDT,
                 sequenceCount: EDT.nbSequences
             },
-            theme: theme.theme,
             unreadDiscussions: Communication.DiscussionNonLues
         }))(user.parametresUtilisateur),
         sessionAuthorizations: {
