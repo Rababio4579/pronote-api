@@ -54,6 +54,10 @@ async function student()
     const discussions = await session.discussions();
     const seeDiscussion = discussions.length ? await session.seeDiscussion(discussions[0]) : null;
 
+    const timetable = await session.timetable(from, to);
+    const params = session.params;
+    const user = session.user;
+
 
     return {
         name: session.user.name,
@@ -62,7 +66,8 @@ async function student()
 
         marks, evaluations, absences,
         infos, contents, homeworks, menu, files,
-        report, recipients, discussions, seeDiscussion
+        report, recipients, discussions, seeDiscussion, timetable,
+        params, user
     };
 }
 
@@ -87,13 +92,17 @@ async function parent()
         const menu = await session.menu(student, from, to);
         const files = await session.files(student);
 
+        const params = session.params;
+        const user = session.user;
+
         students.push({
             name: student.name,
             studentClass: student.studentClass.name,
             avatar: student.avatar,
 
             timetable, marks, evaluations, absences,
-            infos, contents, homeworks, menu, files
+            infos, contents, homeworks, menu, files,
+            params, user
         });
     }
 
