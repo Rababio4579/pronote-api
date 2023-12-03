@@ -7,12 +7,15 @@ const FileTypes = {
     1: 'file'
 }
 
-function getFileURL(session, { id, name, type })
+function getFileURL(session, { id, name, type, url })
 {
     const fileID = cipher(session, JSON.stringify(toPronote({ id, type })));
     const fileName = encodeURIComponent(encodeURIComponent(name)); // *Clown emoji*
 
     if (FileTypes[type] === 'link') {
+        if (url) {
+            return url;
+        }
         return session.server + EXTERNAL_FILES_FOLDER + fileID + '/link?Session=' + session.id;
     }
     return session.server + EXTERNAL_FILES_FOLDER + fileID + '/' + fileName + '?Session=' + session.id;
