@@ -69,7 +69,7 @@ export abstract class PronoteSession
 
     /**
      * Clé publique de l'instance Pronote depuis laquelle la session a été ouverte, construite à partir de
-     * l'exposant et du modulo donné par Pronote directement dans la page.
+     * l'exposant et du modulo donné dans le eleve.js de Pronote.
      */
     publicKey: forge.pki.Key
 
@@ -1505,10 +1505,7 @@ export interface PronoteSessionOptions
     type: PronoteAccountTypeName | PronoteAccountType,
 
     disableAES: boolean,
-    disableCompress: boolean,
-
-    keyModulus: string,
-    keyExponent: string
+    disableCompress: boolean
 }
 
 export interface CipherOptions
@@ -1533,9 +1530,6 @@ export interface PronoteStartParams
 
     sCrA: boolean, // Disable AES
     sCoA: boolean, // Disable compression
-
-    MR: string, // Public key modulus (as BigInt string)
-    ER: string, // Public key exponent (as BigInt string)
 
     // There are more, but undocumented (feel free to open a P.R.!)
 }

@@ -28,7 +28,7 @@ const REQUESTS = {
 
 class PronoteSession
 {
-    constructor({ serverURL, sessionID, type, disableAES, disableCompress, keyModulus, keyExponent })
+    constructor({ serverURL, sessionID, type, disableAES, disableCompress })
     {
         this.id = ~~sessionID;
         this.server = serverURL;
@@ -37,7 +37,7 @@ class PronoteSession
         this.disableAES = disableAES;
         this.disableCompress = disableCompress;
 
-        initCipher(this, keyModulus, keyExponent);
+        initCipher(this);
 
         this.request = -1;
         this.isKeptAlive = false;
