@@ -56,9 +56,6 @@ async function getUser(session)
             canPrint: aut.autoriserImpression,
             ...authorizations
         },
-        minPasswordSize: user.reglesSaisieMDP.min,
-        maxPasswordSize: user.reglesSaisieMDP.max,
-        passwordRules: parse(user.reglesSaisieMDP.regles),
         kioskAccess: user.autorisationKiosque,
         tabs: user.listeOnglets.map(parseTab),
         hiddenTabs: user.listeOngletsInvisibles,
